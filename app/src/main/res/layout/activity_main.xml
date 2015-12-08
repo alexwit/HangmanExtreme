@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".Game_MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="The answer:"
+        android:id="@+id/TVAnswer"
+        android:layout_alignBottom="@+id/TVwrong"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Guesses:"
+        android:id="@+id/tvNumberLetters"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/btnRestart"
+        android:layout_toEndOf="@+id/btnRestart" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/tvNumberGuesses"
+        android:layout_alignTop="@+id/tvNumberLetters"
+        android:layout_toRightOf="@+id/tvNumberLetters"
+        android:layout_alignBottom="@+id/tvNumberLetters" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/outputWord"
+        android:layout_above="@+id/etChar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="11dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Attempts left:"
+        android:id="@+id/tvNumberLeft"
+        android:layout_below="@+id/tvNumberLetters"
+        android:layout_alignLeft="@+id/tvNumberLetters"
+        android:layout_alignStart="@+id/tvNumberLetters" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/TVNumberAttempts"
+        android:layout_below="@+id/tvNumberLetters"
+        android:layout_toRightOf="@+id/tvNumberLeft"
+        android:layout_toEndOf="@+id/tvNumberLeft"
+        android:layout_alignBottom="@+id/tvNumberLeft" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etChar"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/tvEnterChar"
+        android:layout_toEndOf="@+id/tvEnterChar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Enter a character:"
+        android:id="@+id/tvEnterChar"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/outputWord"
+        android:layout_toEndOf="@+id/outputWord" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wrong CHars:"
+        android:id="@+id/TVwrong"
+        android:layout_above="@+id/outputWord"
+        android:layout_alignRight="@+id/TVNumberAttempts"
+        android:layout_alignEnd="@+id/TVNumberAttempts" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TVwrongChars"
+        android:layout_below="@+id/TVwrong"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check char"
+        android:id="@+id/btnCharcheck"
+        android:clickable="true"
+        android:onClick="checkChar"
+        android:layout_alignTop="@+id/etChar"
+        android:layout_alignRight="@+id/TVwrong"
+        android:layout_alignEnd="@+id/TVwrong" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RESTART"
+        android:id="@+id/btnRestart"
+        android:clickable="true"
+        android:onClick="emptySpace"
+        android:layout_below="@+id/btnCharcheck"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="74dp" />
+
+</RelativeLayout>

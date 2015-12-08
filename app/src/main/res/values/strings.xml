@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">HangmanExtreme</string>
+    <string name="string">Choose the Length of the word</string>
+</resources>
