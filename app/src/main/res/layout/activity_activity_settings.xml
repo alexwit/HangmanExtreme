@@ -28,7 +28,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="33dp"
-        android:progress="5"
+        android:progress="4"
         android:indeterminate="false" />
 
     <TextView
@@ -59,7 +59,8 @@
         android:text="EVILMODE"
         android:layout_above="@+id/btnReturnSettings"
         android:layout_alignLeft="@+id/textevilmode"
-        android:layout_alignStart="@+id/textevilmode" />
+        android:layout_alignStart="@+id/textevilmode"
+        android:clickable="true" />
 
     <SeekBar
         android:layout_width="300dp"

@@ -40,10 +40,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/outputWord"
-        android:layout_above="@+id/etChar"
+        android:layout_below="@+id/TVwrongChars"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="11dp" />
+        android:layout_alignRight="@+id/TVAnswer"
+        android:layout_alignEnd="@+id/TVAnswer" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -52,8 +53,8 @@
         android:text="Attempts left:"
         android:id="@+id/tvNumberLeft"
         android:layout_below="@+id/tvNumberLetters"
-        android:layout_alignLeft="@+id/tvNumberLetters"
-        android:layout_alignStart="@+id/tvNumberLetters" />
+        android:layout_toLeftOf="@+id/tvNumberGuesses"
+        android:layout_toStartOf="@+id/tvNumberGuesses" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,18 +80,19 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Enter a character:"
         android:id="@+id/tvEnterChar"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/outputWord"
-        android:layout_toEndOf="@+id/outputWord" />
+        android:layout_alignBottom="@+id/etChar"
+        android:layout_toStartOf="@+id/tvNumberLeft"
+        android:layout_toLeftOf="@+id/tvNumberLeft" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wrong CHars:"
+        android:text="Wrong Chars:"
         android:id="@+id/TVwrong"
-        android:layout_above="@+id/outputWord"
+        android:layout_below="@+id/tvNumberLeft"
         android:layout_alignRight="@+id/TVNumberAttempts"
-        android:layout_alignEnd="@+id/TVNumberAttempts" />
+        android:layout_alignEnd="@+id/TVNumberAttempts"
+        android:layout_marginTop="61dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -119,7 +121,6 @@
         android:clickable="true"
         android:onClick="emptySpace"
         android:layout_below="@+id/btnCharcheck"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="74dp" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

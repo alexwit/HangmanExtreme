@@ -16,7 +16,10 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+
     Gameplay gameplay;
+    GoodGameplay goodGameplay;
+    EvilGameplay evilGameplay;
     TextView answerWord;
     EditText guessedChar;
     Button btncheckChar;
@@ -24,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
     TextView TVattempts;
     TextView TVwrongChars;
     TextView tvnumberGuessses;
+
+//    String[] dictionary;
+//
+//    Loaddictionary loadDict;
 
     private SharedPreferences preferences;
     private static final String prefSettings = "settings";
@@ -36,15 +43,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        gameplay = new Gameplay();
         preferences = getSharedPreferences(prefSettings, Context.MODE_PRIVATE);
+
+
+        // adjustable settings
+        int userLength = preferences.getInt(prefLength, 4);
+        int attempts = preferences.getInt(prefAttempts, 10);
+
+
+        //gameplay = new Gameplay();
+        if (true) {
+            evilGameplay = new EvilGameplay(this, userLength);
+            evilGameplay.setWordLength(userLength);
+            evilGameplay.setAttempts(attempts);
+            //evilGameplay.setUnderscores();
+            evilGameplay.restart();
+        }
+           // goodGameplay = new GoodGameplay(this, userLength);
+        gameplay = new Gameplay();
 
         btncheckChar = (Button)findViewById(R.id.btnCharcheck);
         btnRestart = (Button)findViewById(R.id.btnRestart);
-
-        //final Integer attempts = preferences.getInt(prefAttempts, 6);
-
-
         TVattempts = (TextView)findViewById(R.id.TVNumberAttempts);
         answerWord = (TextView)findViewById(R.id.outputWord);
         TVwrongChars = (TextView) findViewById(R.id.TVwrongChars);
@@ -53,9 +72,7 @@ public class MainActivity extends AppCompatActivity {
         guessedChar = (EditText) findViewById(R.id.etChar);
 
         // todo: make clear where attempts is used for
-        TVattempts.setText(String.valueOf(gameplay.attemptsleft));
-
-        gameplay.setUnderscores();
+        TVattempts.setText(String.valueOf(gameplay.getAttempts()));
 
         // todo explain what is happing and change outputword
         answerWord.setText(String.valueOf(gameplay.guessedWord));
@@ -65,9 +82,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final Character C = guessedChar.getText().toString().charAt(0);
+                final Character C = guessedChar.getText().toString().toUpperCase().charAt(0);
+
                 Log.i("Mainactivity", "wat is de char van de user: " + C);
 
+                if(true) {
+                    evilGameplay.evilCheckList(evilGameplay.evilList, C);
+                }
                 if (gameplay.checkChar(C)) {
 
                     for (int i = 0; i < gameplay.currWord.length(); i++) {
@@ -77,8 +98,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     gameplay.updateGuesses();
-                    Log.i("Mainactivity", "Guesses + 1 " + gameplay.numberGuesses);
-                    tvnumberGuessses.setText(String.valueOf(gameplay.numberGuesses));
+                    tvnumberGuessses.setText(String.valueOf(gameplay.getNumberGuesses()));
 
                     if (gameplay.checkWord()) {
 //                    Toast.makeText(MainActivity.this, "You've WON!!", Toast.LENGTH_LONG).show();
@@ -87,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 } else if (gameplay.updateWrongChar(C)) {
-                    if (gameplay.attemptsleft == 0) {
+                    if (gameplay.getAttempts() == 0) {
                         Toast.makeText(MainActivity.this, "You've DIED!!", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(MainActivity.this, lose.class);
                         startActivity(i);
@@ -99,18 +119,15 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
 
                     TVwrongChars.setText(gameplay.wrongChars.toString());
-                    Log.i("Mainactivity", "Guesses 2.0 + 1" + gameplay.numberGuesses);
+                    Log.i("Mainactivity", "Guesses 2.0 + 1" + gameplay.getNumberGuesses());
 
-                    tvnumberGuessses.setText(String.valueOf(gameplay.numberGuesses));
+                    tvnumberGuessses.setText(String.valueOf(gameplay.getNumberGuesses()));
 
-                    Log.i("Mainactivity", "attempts + -1" + gameplay.numberGuesses);
+                    Log.i("Mainactivity", "attempts + -1" + gameplay.getNumberGuesses());
 
-                    TVattempts.setText(String.valueOf(gameplay.attemptsleft));
+                    TVattempts.setText(String.valueOf(gameplay.getAttempts()));
 
                 }
-//                else if (gameplay.checkWord()) {
-//                    Toast.makeText(MainActivity.this, "You've WON!!", Toast.LENGTH_LONG).show();
-//                }
 
             }
         });
@@ -120,8 +137,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 gameplay.restart();
                 gameplay.setUnderscores();
-                TVattempts.setText((String.valueOf(gameplay.attemptsleft)));
-                tvnumberGuessses.setText(String.valueOf(gameplay.numberGuesses));
+                TVattempts.setText((String.valueOf(gameplay.getAttempts())));
+                tvnumberGuessses.setText(String.valueOf(gameplay.getNumberGuesses()));
                 TVwrongChars.setText(String.valueOf(gameplay.wrongChars));
                 answerWord.setText(String.valueOf(gameplay.guessedWord));
             }
@@ -142,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.action_settings){
 
-            Intent i = new Intent(MainActivity.this, activity_settings.class);
+            Intent i = new Intent(MainActivity.this, Settings.class);
             startActivity(i);
             return true;
         }
