@@ -6,11 +6,22 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+<<<<<<< HEAD
 import java.util.Random;
+=======
+<<<<<<< HEAD
+import java.util.Random;
+=======
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
 
 /**
  * Created by Papi lexus on 6-12-2015.
  */
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
 public class EvilGameplay implements GameplayInterface {
 
     private int attemptsleft = 6;
@@ -35,6 +46,19 @@ public class EvilGameplay implements GameplayInterface {
     private ArrayList selectionWordList;
     private ArrayList loadedList;
 
+<<<<<<< HEAD
+=======
+=======
+public class EvilGameplay extends Gameplay {
+
+    ArrayList<String> evilList;
+    Loaddictionary loadDict;
+    Gameplay gameplay;
+
+    HashMap<String, ArrayList<String>> evilDictionary;
+    ArrayList selectionWordList;
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
 
     public EvilGameplay(Context context, int wordLength){
 
@@ -44,6 +68,10 @@ public class EvilGameplay implements GameplayInterface {
 
         evilList = makeEvilLengthArray(loadedList, wordLength);
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
         setWord(evilList ,wordLength);
 
         setUnderscores();
@@ -51,6 +79,23 @@ public class EvilGameplay implements GameplayInterface {
     }
 
     private ArrayList makeEvilLengthArray(ArrayList dictionary, int wordLength){
+<<<<<<< HEAD
+=======
+=======
+        Log.i("evil", "evillist: " + evilList);
+
+        String henk = setWord(evilList, wordLength);
+        setWord(evilList, wordLength);
+
+        setUnderscores();
+
+        Log.i("evil", "setword: " + henk );
+
+    }
+
+    public ArrayList makeEvilLengthArray(ArrayList dictionary, int wordLength){
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
 
             selectionWordList = new ArrayList();
             int wordCount = 0;
@@ -63,6 +108,10 @@ public class EvilGameplay implements GameplayInterface {
             return selectionWordList;
         }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
 
     private ArrayList evilCheckList(ArrayList list, Character c){
         ArrayList<String> tempArrayList = new ArrayList();
@@ -194,6 +243,7 @@ public class EvilGameplay implements GameplayInterface {
         updateAttempts();
         return true;
     }
+<<<<<<< HEAD
 
     @Override
     public void updateGuesses() {
@@ -209,6 +259,66 @@ public class EvilGameplay implements GameplayInterface {
     public void setAttempts(int attempt) {
         attemptsleft = attempt;
     }
+=======
+
+    @Override
+    public void updateGuesses() {
+        numberGuesses++;
+    }
+
+    @Override
+    public void updateAttempts() {
+        attemptsleft--;
+    }
+
+    @Override
+    public void setAttempts(int attempt) {
+        attemptsleft = attempt;
+    }
+=======
+
+        public ArrayList evilCheckList(ArrayList list, Character c){
+            ArrayList<String> tempArrayList = new ArrayList();
+            evilDictionary = new HashMap<>();
+            for(int i = 0; i < list.size();i++){
+                String key = "";
+                String w = list.get(i).toString();
+                for(int j = 0; j < w.length(); j++){
+                    if(w.charAt(j)== c){
+                        key = key + c;
+//                        Log.i("evil", "print key in the make: " + key);
+                    }
+                    else{
+                        key = key + "_";
+                    }
+                }
+                Log.i("evil", "print key: " + key);
+                if(evilDictionary.get(key)==null){
+                    evilDictionary.put(key,new ArrayList<String>());
+                    evilDictionary.get(key).add(w);
+                    Log.i("evil", "dict key : " + evilDictionary.get(key));
+
+                }
+                else{
+                    evilDictionary.get(key).add(w);
+                    Log.i("Evil", "print values: " + evilDictionary.get(key));
+                }
+            }
+            int sizeCount = 0;
+            for(Map.Entry<String, ArrayList<String>> entry : evilDictionary.entrySet()){
+                Log.i("Evil", "print values:" + entry.getValue());
+                Log.i("Evil", "print keysize: " + entry.getValue().size());
+                    if(entry.getValue().size()> sizeCount) {
+                        sizeCount = entry.getValue().size();
+                        tempArrayList = entry.getValue();
+                    }
+            }
+            Log.i("evilcheck", "arraylist" + tempArrayList);
+            return tempArrayList;
+
+        }
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
 
     @Override
     public StringBuilder getGuessedWord() {

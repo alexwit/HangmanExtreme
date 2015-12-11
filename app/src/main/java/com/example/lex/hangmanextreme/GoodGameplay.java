@@ -1,14 +1,27 @@
 package com.example.lex.hangmanextreme;
 
 import android.content.Context;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
 
 /**
  * Created by Papi lexus on 3-12-2015.
  */
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
 
 public class GoodGameplay implements GameplayInterface {
 
@@ -30,12 +43,30 @@ public class GoodGameplay implements GameplayInterface {
 
         public GoodGameplay(Context context,int length){
 
+<<<<<<< HEAD
+=======
+=======
+public class GoodGameplay extends Gameplay {
+
+        Gameplay gameplay;
+        Loaddictionary loadDict;
+
+        public GoodGameplay(Context context,int length){
+
+            gameplay = new Gameplay();
+
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
             loadDict = new Loaddictionary();
 
             loadedList = loadDict.loadWords(context);
 
             setWord(loadedList,wordLength);
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
             setUnderscores();
 
         }
@@ -149,4 +180,13 @@ public class GoodGameplay implements GameplayInterface {
     public StringBuilder getWrongChars() {
         return wrongChars;
     }
+<<<<<<< HEAD
+=======
+=======
+
+        }
+
+
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
 }

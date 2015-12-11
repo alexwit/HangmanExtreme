@@ -16,7 +16,18 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+<<<<<<< HEAD
     GameplayInterface gameplay;
+=======
+<<<<<<< HEAD
+    GameplayInterface gameplay;
+=======
+
+    Gameplay gameplay;
+    GoodGameplay goodGameplay;
+    EvilGameplay evilGameplay;
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
     TextView answerWord;
     EditText guessedChar;
     Button btncheckChar;
@@ -24,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
     TextView TVattempts;
     TextView TVwrongChars;
     TextView tvnumberGuessses;
+
+//    String[] dictionary;
+//
+//    Loaddictionary loadDict;
 
     private SharedPreferences preferences;
     private static final String prefSettings = "settings";
@@ -36,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
         preferences = getSharedPreferences(prefSettings, Context.MODE_PRIVATE);
 
         // adjustable settings
@@ -44,6 +60,39 @@ public class MainActivity extends AppCompatActivity {
         Boolean gameMode = preferences.getBoolean(prefMode, true);
 
         // identifies all widgets
+=======
+<<<<<<< HEAD
+        preferences = getSharedPreferences(prefSettings, Context.MODE_PRIVATE);
+
+        // adjustable settings
+        int userLength = preferences.getInt(prefLength, 4);
+        int attempts = preferences.getInt(prefAttempts, 10);
+        Boolean gameMode = preferences.getBoolean(prefMode, true);
+
+        // identifies all widgets
+=======
+
+        preferences = getSharedPreferences(prefSettings, Context.MODE_PRIVATE);
+
+
+        // adjustable settings
+        int userLength = preferences.getInt(prefLength, 4);
+        int attempts = preferences.getInt(prefAttempts, 10);
+
+
+        //gameplay = new Gameplay();
+        if (true) {
+            evilGameplay = new EvilGameplay(this, userLength);
+            evilGameplay.setWordLength(userLength);
+            evilGameplay.setAttempts(attempts);
+            //evilGameplay.setUnderscores();
+            evilGameplay.restart();
+        }
+           // goodGameplay = new GoodGameplay(this, userLength);
+        gameplay = new Gameplay();
+
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
         btncheckChar = (Button)findViewById(R.id.btnCharcheck);
         btnRestart = (Button)findViewById(R.id.btnRestart);
         TVattempts = (TextView)findViewById(R.id.TVNumberAttempts);
@@ -52,10 +101,15 @@ public class MainActivity extends AppCompatActivity {
         tvnumberGuessses = (TextView) findViewById(R.id.tvNumberGuesses);
         guessedChar = (EditText) findViewById(R.id.etChar);
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
         // checks which gameplay need to be initialized
         if (gameMode) {
             gameplay = new EvilGameplay(this, userLength);
             Log.i("main", "evil");
+<<<<<<< HEAD
 
         }
         else{
@@ -70,6 +124,26 @@ public class MainActivity extends AppCompatActivity {
 
         setValuesWidgets();
 
+=======
+
+        }
+        else{
+            gameplay = new GoodGameplay(this, userLength);
+            Log.i("main", "good");
+        }
+
+
+        // sets preferred settings of the player
+        gameplay.setWordLength(userLength);
+        gameplay.setAttempts(attempts);
+
+        setValuesWidgets();
+=======
+        // todo: make clear where attempts is used for
+        TVattempts.setText(String.valueOf(gameplay.getAttempts()));
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
+
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
 //        answerWord.setText(String.valueOf(gameplay.getGuessedWord()));
 //        TVattempts.setText(String.valueOf(gameplay.getAttempts()));
 
@@ -78,10 +152,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+<<<<<<< HEAD
                 // gets the Character from the user
                 final Character C = guessedChar.getText().toString().toUpperCase().charAt(0);
 
                 // checks if the character is in the word
+=======
+<<<<<<< HEAD
+                // gets the Character from the user
+                final Character C = guessedChar.getText().toString().toUpperCase().charAt(0);
+
+                // checks if the character is in the word
+=======
+                final Character C = guessedChar.getText().toString().toUpperCase().charAt(0);
+
+                Log.i("Mainactivity", "wat is de char van de user: " + C);
+
+                if(true) {
+                    evilGameplay.evilCheckList(evilGameplay.evilList, C);
+                }
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
                 if (gameplay.checkChar(C)) {
                     // Updates the word to show the character on the correct spot
                     // is going to be integrated in ultimate version
@@ -91,9 +182,21 @@ public class MainActivity extends AppCompatActivity {
                             answerWord.setText(String.valueOf(gameplay.getGuessedWord()));
                         }
                     }
+<<<<<<< HEAD
                     setValuesWidgets();
 //                    tvnumberGuessses.setText(String.valueOf(gameplay.getNumberGuesses()));
                     // checks if the whole word is guessed
+=======
+<<<<<<< HEAD
+                    setValuesWidgets();
+//                    tvnumberGuessses.setText(String.valueOf(gameplay.getNumberGuesses()));
+                    // checks if the whole word is guessed
+=======
+                    gameplay.updateGuesses();
+                    tvnumberGuessses.setText(String.valueOf(gameplay.getNumberGuesses()));
+
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
                     if (gameplay.checkWord()) {
                         Intent i = new Intent(MainActivity.this, won.class);
                         startActivity(i);
@@ -106,10 +209,28 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(i);
                     }
                     Toast.makeText(MainActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
                     setValuesWidgets();
 //                    TVwrongChars.setText(gameplay.getWrongChars().toString());
 //                    tvnumberGuessses.setText(String.valueOf(gameplay.getNumberGuesses()));
 //                    TVattempts.setText(String.valueOf(gameplay.getAttempts()));
+<<<<<<< HEAD
+=======
+=======
+
+                    TVwrongChars.setText(gameplay.wrongChars.toString());
+                    Log.i("Mainactivity", "Guesses 2.0 + 1" + gameplay.getNumberGuesses());
+
+                    tvnumberGuessses.setText(String.valueOf(gameplay.getNumberGuesses()));
+
+                    Log.i("Mainactivity", "attempts + -1" + gameplay.getNumberGuesses());
+
+                    TVattempts.setText(String.valueOf(gameplay.getAttempts()));
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
 
                 }
 
@@ -121,7 +242,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 gameplay.restart();
+<<<<<<< HEAD
                 setValuesWidgets();
+=======
+<<<<<<< HEAD
+                setValuesWidgets();
+=======
+                gameplay.setUnderscores();
+                TVattempts.setText((String.valueOf(gameplay.getAttempts())));
+                tvnumberGuessses.setText(String.valueOf(gameplay.getNumberGuesses()));
+                TVwrongChars.setText(String.valueOf(gameplay.wrongChars));
+                answerWord.setText(String.valueOf(gameplay.guessedWord));
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
+>>>>>>> 297ed9890a5e23e896a69f0d2c978dd07ab7f415
             }
         });
     }
