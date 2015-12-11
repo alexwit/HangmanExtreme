@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Gameplay gameplay;
+    GameplayInterface gameplay;
     TextView answerWord;
     EditText guessedChar;
     Button btncheckChar;
@@ -29,105 +29,110 @@ public class MainActivity extends AppCompatActivity {
     private static final String prefSettings = "settings";
     private static final String prefLength = "wordLength";
     private static final String prefAttempts = "attempts";
+    private static final String prefMode = "mode";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        gameplay = new Gameplay();
         preferences = getSharedPreferences(prefSettings, Context.MODE_PRIVATE);
 
+        // adjustable settings
+        int userLength = preferences.getInt(prefLength, 4);
+        int attempts = preferences.getInt(prefAttempts, 10);
+        Boolean gameMode = preferences.getBoolean(prefMode, true);
+
+        // identifies all widgets
         btncheckChar = (Button)findViewById(R.id.btnCharcheck);
         btnRestart = (Button)findViewById(R.id.btnRestart);
-
-        //final Integer attempts = preferences.getInt(prefAttempts, 6);
-
-
         TVattempts = (TextView)findViewById(R.id.TVNumberAttempts);
         answerWord = (TextView)findViewById(R.id.outputWord);
         TVwrongChars = (TextView) findViewById(R.id.TVwrongChars);
         tvnumberGuessses = (TextView) findViewById(R.id.tvNumberGuesses);
-
         guessedChar = (EditText) findViewById(R.id.etChar);
 
-        // todo: make clear where attempts is used for
-        TVattempts.setText(String.valueOf(gameplay.attemptsleft));
+        // checks which gameplay need to be initialized
+        if (gameMode) {
+            gameplay = new EvilGameplay(this, userLength);
+            Log.i("main", "evil");
 
-        gameplay.setUnderscores();
+        }
+        else{
+            gameplay = new GoodGameplay(this, userLength);
+            Log.i("main", "good");
+        }
 
-        // todo explain what is happing and change outputword
-        answerWord.setText(String.valueOf(gameplay.guessedWord));
+
+        // sets preferred settings of the player
+        gameplay.setWordLength(userLength);
+        gameplay.setAttempts(attempts);
+
+        setValuesWidgets();
+
+//        answerWord.setText(String.valueOf(gameplay.getGuessedWord()));
+//        TVattempts.setText(String.valueOf(gameplay.getAttempts()));
 
 
         btncheckChar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                final Character C = guessedChar.getText().toString().charAt(0);
-                Log.i("Mainactivity", "wat is de char van de user: " + C);
+                // gets the Character from the user
+                final Character C = guessedChar.getText().toString().toUpperCase().charAt(0);
 
+                // checks if the character is in the word
                 if (gameplay.checkChar(C)) {
-
-                    for (int i = 0; i < gameplay.currWord.length(); i++) {
+                    // Updates the word to show the character on the correct spot
+                    // is going to be integrated in ultimate version
+                    for (int i = 0; i < gameplay.getCurrWord().length(); i++) {
                         if (gameplay.updateChar(i, C)) {
-                            gameplay.guessedWord.setCharAt(i, C);
-                            answerWord.setText(String.valueOf(gameplay.guessedWord));
+                            gameplay.getGuessedWord().setCharAt(i, C);
+                            answerWord.setText(String.valueOf(gameplay.getGuessedWord()));
                         }
                     }
-                    gameplay.updateGuesses();
-                    Log.i("Mainactivity", "Guesses + 1 " + gameplay.numberGuesses);
-                    tvnumberGuessses.setText(String.valueOf(gameplay.numberGuesses));
-
+                    setValuesWidgets();
+//                    tvnumberGuessses.setText(String.valueOf(gameplay.getNumberGuesses()));
+                    // checks if the whole word is guessed
                     if (gameplay.checkWord()) {
-//                    Toast.makeText(MainActivity.this, "You've WON!!", Toast.LENGTH_LONG).show();
                         Intent i = new Intent(MainActivity.this, won.class);
                         startActivity(i);
                     }
-
+                    // Updates the wrong character list, the attempts left and guesses
                 } else if (gameplay.updateWrongChar(C)) {
-                    if (gameplay.attemptsleft == 0) {
+                    if (gameplay.getAttempts() == 0) {
                         Toast.makeText(MainActivity.this, "You've DIED!!", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(MainActivity.this, lose.class);
                         startActivity(i);
                     }
-
-                    //todo door de preferences kan je de attempts niet meer aanpassen
-                    gameplay.updateAttempts();
-
                     Toast.makeText(MainActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
-
-                    TVwrongChars.setText(gameplay.wrongChars.toString());
-                    Log.i("Mainactivity", "Guesses 2.0 + 1" + gameplay.numberGuesses);
-
-                    tvnumberGuessses.setText(String.valueOf(gameplay.numberGuesses));
-
-                    Log.i("Mainactivity", "attempts + -1" + gameplay.numberGuesses);
-
-                    TVattempts.setText(String.valueOf(gameplay.attemptsleft));
+                    setValuesWidgets();
+//                    TVwrongChars.setText(gameplay.getWrongChars().toString());
+//                    tvnumberGuessses.setText(String.valueOf(gameplay.getNumberGuesses()));
+//                    TVattempts.setText(String.valueOf(gameplay.getAttempts()));
 
                 }
-//                else if (gameplay.checkWord()) {
-//                    Toast.makeText(MainActivity.this, "You've WON!!", Toast.LENGTH_LONG).show();
-//                }
 
             }
         });
 
+        // restarts all statistics of the game and chooses a new word
         btnRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gameplay.restart();
-                gameplay.setUnderscores();
-                TVattempts.setText((String.valueOf(gameplay.attemptsleft)));
-                tvnumberGuessses.setText(String.valueOf(gameplay.numberGuesses));
-                TVwrongChars.setText(String.valueOf(gameplay.wrongChars));
-                answerWord.setText(String.valueOf(gameplay.guessedWord));
+                setValuesWidgets();
             }
         });
+    }
 
 
+    // sets all widgets with the gorrect values
+    public void setValuesWidgets (){
+        TVattempts.setText((String.valueOf(gameplay.getAttempts())));
+        tvnumberGuessses.setText(String.valueOf(gameplay.getNumberGuesses()));
+        TVwrongChars.setText(String.valueOf(gameplay.getWrongChars()));
+        answerWord.setText(String.valueOf(gameplay.getGuessedWord()));
     }
 
     @Override
@@ -142,9 +147,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.action_settings){
 
-            Intent i = new Intent(MainActivity.this, activity_settings.class);
+            Intent i = new Intent(MainActivity.this, Settings.class);
             startActivity(i);
-            return true;
         }
         if (id == R.id.action_highscore){
 
@@ -153,5 +157,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
