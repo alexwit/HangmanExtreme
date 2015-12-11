@@ -1,14 +1,18 @@
 package com.example.lex.hangmanextreme;
 
 import android.content.Context;
+<<<<<<< HEAD
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
+=======
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
 
 /**
  * Created by Papi lexus on 3-12-2015.
  */
+<<<<<<< HEAD
 
 public class GoodGameplay implements GameplayInterface {
 
@@ -30,12 +34,24 @@ public class GoodGameplay implements GameplayInterface {
 
         public GoodGameplay(Context context,int length){
 
+=======
+public class GoodGameplay extends Gameplay {
+
+        Gameplay gameplay;
+        Loaddictionary loadDict;
+
+        public GoodGameplay(Context context,int length){
+
+            gameplay = new Gameplay();
+
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
             loadDict = new Loaddictionary();
 
             loadedList = loadDict.loadWords(context);
 
             setWord(loadedList,wordLength);
 
+<<<<<<< HEAD
             setUnderscores();
 
         }
@@ -149,4 +165,10 @@ public class GoodGameplay implements GameplayInterface {
     public StringBuilder getWrongChars() {
         return wrongChars;
     }
+=======
+
+        }
+
+
+>>>>>>> bebb396609ba22e90af6d101bad8bca97e339124
 }
